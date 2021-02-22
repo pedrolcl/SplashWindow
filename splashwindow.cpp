@@ -14,9 +14,7 @@ SplashWindow::SplashWindow(QWindow *parent)
     , m_message(qApp->applicationName() + " " + qApp->applicationVersion())
 {
     setFlags(Qt::SplashScreen | Qt::FramelessWindowHint);
-    QRect r(QPoint(), m_image.size() / m_image.devicePixelRatio());
-    QPoint c = screen()->geometry().center() - r.center();
-    setGeometry(c.x(), c.y(), r.width(), r.height());
+    resize(m_image.size());
 }
 
 bool SplashWindow::event(QEvent *event)
@@ -52,6 +50,11 @@ QString SplashWindow::message() const
 void SplashWindow::setMessage(const QString &message)
 {
     m_message = message;
+}
+
+void SplashWindow::finish(QWindow* w)
+{
+    connect(w, &QWindow::visibleChanged, this, [=](bool visible){ if(visible) this->close(); });
 }
 
 void SplashWindow::renderNow()

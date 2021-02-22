@@ -12,6 +12,7 @@ public:
 
     QString message() const;
     void setMessage(const QString &message);
+    void finish(QWindow* w);
 
 public slots:
     void renderLater();

@@ -1,6 +1,5 @@
 #include <QGuiApplication>
 #include <QQuickView>
-#include <QTimer>
 #include "splashwindow.h"
 
 int main(int argc, char *argv[])
@@ -9,12 +8,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("SplashWindow Demo");
     QCoreApplication::setApplicationVersion("v1.2.3");
     QGuiApplication app(argc, argv);
+
+    SplashWindow splash;
+    splash.show();
+    //QTimer::singleShot(2500, &splash, SLOT(close()));
+    QCoreApplication::processEvents();
+
     QQuickView *view = new QQuickView;
-
-    SplashWindow w;
-    w.show();
-    QTimer::singleShot(2500, &w, SLOT(close()));
-
+    splash.finish(view);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     view->setSource(url);
     view->show();
