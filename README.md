@@ -10,8 +10,24 @@ It is derived from the [Raster Window](https://doc.qt.io/qt-5/qtgui-rasterwindow
 
 ## Usage
 
-    SplashWindow w;
-    w.show();
-    QTimer::singleShot(2500, &w, SLOT(close()));
+1. close after a fixed amount of time:
 
-Or call `close()` after completing the initialization.
+    SplashWindow splash;
+    splash.show();
+    QTimer::singleShot(2500, &splash, SLOT(close()));
+
+2. close when another window is shown:
+
+    SplashWindow splash;
+    splash.show();
+    QQuickView *view = new QQuickView;
+    splash.finish(view);
+    view->show();
+
+view may be an instance of any QWindow derived class (like QQuickView)
+
+Since the splash screen is typically displayed before the event loop has started running, 
+it is necessary to periodically call QCoreApplication::processEvents().
+
+You may also call `splash.close()` after completing the application initialization.
+A new method `centerInScreen(QScreen *s)` has been added to control the positioning of the splash window.

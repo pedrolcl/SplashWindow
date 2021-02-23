@@ -13,6 +13,7 @@ public:
     QString message() const;
     void setMessage(const QString &message);
     void finish(QWindow* w);
+    void centerInScreen(QScreen* s);
 
 public slots:
     void renderLater();

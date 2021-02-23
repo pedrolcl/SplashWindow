@@ -57,6 +57,13 @@ void SplashWindow::finish(QWindow* w)
     connect(w, &QWindow::visibleChanged, this, [=](bool visible){ if(visible) this->close(); });
 }
 
+void SplashWindow::centerInScreen(QScreen *s)
+{
+    setFlag(Qt::SplashScreen, false);
+    QPoint c = s->availableGeometry().center() - geometry().center();
+    setPosition(c);
+}
+
 void SplashWindow::renderNow()
 {
     if (!isExposed())
